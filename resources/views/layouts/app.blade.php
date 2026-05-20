@@ -1,8 +1,3 @@
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -35,44 +30,71 @@
         </div>
         <div class="px-3">
             <div class="section-title">Dashboard</div>
-            <a href="index.html" class="nav-link active"><i class="bi bi-speedometer2"></i> Overview</a>
-            <a href="map.html" class="nav-link"><i class="bi bi-map"></i> Live Shipment Map</a>
-            <a href="fleet-status.html" class="nav-link"><i class="bi bi-activity"></i> Fleet Status</a>
-            <div class="section-title">Shipments</div>
-            <a href="shipments.html" class="nav-link"><i class="bi bi-truck"></i> All Shipments</a>
-            <a href="track.html" class="nav-link"><i class="bi bi-compass"></i> Track Shipment</a>
-            <a href="create.html" class="nav-link"><i class="bi bi-plus-square"></i> Create Shipment</a>
-            <a href="delayed.html" class="nav-link"><i class="bi bi-clock"></i> Delayed Shipments</a>
-            <div class="section-title">Fleet Management</div>
-            <a href="vehicles.html" class="nav-link"><i class="bi bi-bus-front"></i> Vehicle List</a>
-            <a href="maintenance.html" class="nav-link"><i class="bi bi-wrench"></i> Maintenance Logs</a>
-            <a href="drivers.html" class="nav-link"><i class="bi bi-person-badge"></i> Driver Assignments</a>
-            <div class="section-title">Warehouses</div>
-            <a href="warehouses.html" class="nav-link"><i class="bi bi-building"></i> Warehouse Locations</a>
-            <a href="inventory.html" class="nav-link"><i class="bi bi-box-seam"></i> Inventory Levels</a>
-            <a href="restock.html" class="nav-link"><i class="bi bi-cart-plus"></i> Restock Requests</a>
-            <div class="section-title">Vendors & Clients</div>
-            <a href="vendors.html" class="nav-link"><i class="bi bi-people"></i> Vendor Directory</a>
-            <a href="clients.html" class="nav-link"><i class="bi bi-person-lines-fill"></i> Clients List</a>
-            <a href="feedback.html" class="nav-link"><i class="bi bi-chat-left-text"></i> Client Feedback</a>
+            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"><i
+                    class="bi bi-speedometer2"></i> Overview</a>
+            <a href="{{ route('admin.orders.track') }}"
+                class="nav-link {{ request()->routeIs('orders.track') ? 'active' : '' }}"><i class="bi bi-compass"></i>
+                Track Delivery</a>
+            <a href="" class="nav-link"><i class="bi bi-activity"></i> Fleet Status</a>
             <div class="section-title">Orders</div>
-            <a href="orders.html" class="nav-link"><i class="bi bi-card-checklist"></i> All Orders</a>
-            <a href="scheduled.html" class="nav-link"><i class="bi bi-calendar-check"></i> Scheduled Deliveries</a>
-            <a href="returns.html" class="nav-link"><i class="bi bi-arrow-counterclockwise"></i> Returns</a>
-            <a href="cancellations.html" class="nav-link"><i class="bi bi-x-circle"></i> Cancellations</a>
+            <a href="{{ route('admin.orders.index') }}"
+                class="nav-link {{ request()->routeIs('admin.orders.index') ? 'active' : '' }}"><i
+                    class="bi bi-truck"></i>
+                All Orders</a>
+            <a href="{{ route('admin.orders.create') }}"
+                class="nav-link {{ request()->routeIs('admin.orders.create') ? 'active' : '' }}"><i
+                    class="bi bi-plus-square"></i> Create
+                Order</a>
+
+            <div class="section-title">Carrier Management</div>
+            <a href="{{ route('admin.carriers.index') }}"
+                class="nav-link {{ request()->routeIs('admin.carriers.index') ? 'active' : '' }}"><i
+                    class="bi bi-bus-front"></i> Carrier List</a>
+            <a href="" class="nav-link"><i class="bi bi-wrench"></i> Scheduled Deliveries</a>
+
+            <div class="section-title">Fleet Management</div>
+            <a href="" class="nav-link"><i class="bi bi-bus-front"></i> Vehicle List</a>
+            <a href="" class="nav-link"><i class="bi bi-wrench"></i> Maintenance Logs</a>
+            <a href="" class="nav-link"><i class="bi bi-person-badge"></i> Driver Assignments</a>
+
+            <div class="section-title">Warehouses</div>
+            <a href="{{ route('admin.warehouses.index') }}"
+                class="nav-link {{ request()->routeIs('admin.warehouses.index') ? 'active' : '' }}"><i
+                    class="bi bi-building"></i> Warehouse Locations</a>
+            {{-- <a href="{{ route('admin.warehouses.inventory', ['id' => $warehouse->id]) }}"
+                class="nav-link {{ request()->routeIs('admin.warehouses.inventory', ['id' => $warehouse->id]) ? 'active' : '' }}"><i
+                    class="bi bi-box-seam"></i> Inventory Levels</a> --}}
+            <a href="" class="nav-link"><i class="bi bi-cart-plus"></i> Restock Requests</a>
+
+            <div class="section-title">Staff Management</div>
+            <a href="{{ route('admin.users.index') }}"
+                class="nav-link {{ request()->routeIs('admin.users.index') ? 'active' : '' }}"><i
+                    class="bi bi-people"></i> User Directory</a>
+            <a href="" class="nav-link"><i class="bi bi-person-lines-fill"></i> Roles</a>
+            <a href="" class="nav-link"><i class="bi bi-chat-left-text"></i> Permissions</a>
+
+            <div class="section-title">Vendors & Clients</div>
+            <a href="{{ route('admin.vendors.index') }}"
+                class="nav-link {{ request()->routeIs('admin.vendors.index') ? 'active' : '' }}"><i
+                    class="bi bi-people"></i> Vendor Directory</a>
+            <a href="" class="nav-link"><i class="bi bi-person-lines-fill"></i> Clients List</a>
+            <a href="" class="nav-link"><i class="bi bi-chat-left-text"></i> Client Feedback</a>
+
             <div class="section-title">Reports</div>
-            <a href="delivery.html" class="nav-link"><i class="bi bi-bar-chart-line"></i> Delivery Performance</a>
-            <a href="revenue.html" class="nav-link"><i class="bi bi-graph-up"></i> Revenue Analysis</a>
-            <a href="fleet.html" class="nav-link"><i class="bi bi-pie-chart"></i> Fleet Efficiency</a>
+            <a href="" class="nav-link"><i class="bi bi-bar-chart-line"></i> Delivery Performance</a>
+            <a href="" class="nav-link"><i class="bi bi-graph-up"></i> Revenue Analysis</a>
+            <a href="" class="nav-link"><i class="bi bi-pie-chart"></i> Fleet Efficiency</a>
+
             <div class="section-title">System Tools</div>
-            <a href="settings.html" class="nav-link"><i class="bi bi-gear"></i> Settings</a>
-            <a href="roles.html" class="nav-link"><i class="bi bi-shield-check"></i> Roles & Permissions</a>
-            <a href="notifications.html" class="nav-link"><i class="bi bi-bell"></i> Notifications</a>
+            <a href="" class="nav-link"><i class="bi bi-gear"></i> Settings</a>
+            <a href="" class="nav-link"><i class="bi bi-shield-check"></i> Roles & Permissions</a>
+            <a href="" class="nav-link"><i class="bi bi-bell"></i> Notifications</a>
+
             <div class="section-title">Help & Logs</div>
-            <a href="help.html" class="nav-link"><i class="bi bi-life-preserver"></i> Help Center</a>
-            <a href="contact.html" class="nav-link"><i class="bi bi-telephone"></i> Contact</a>
-            <a href="email.html" class="nav-link"><i class="bi bi-envelope"></i> Email</a>
-            <a href="chat.html" class="nav-link"><i class="bi bi-chat-dots"></i> Chat</a>
+            <a href="" class="nav-link"><i class="bi bi-life-preserver"></i> Help Center</a>
+            <a href="" class="nav-link"><i class="bi bi-telephone"></i> Contact</a>
+            <a href="" class="nav-link"><i class="bi bi-envelope"></i> Email</a>
+            <a href="" class="nav-link"><i class="bi bi-chat-dots"></i> Chat</a>
             <a href="tickets.html" class="nav-link"><i class="bi bi-ticket-perforated"></i> Support Tickets</a>
             <a href="logs.html" class="nav-link"><i class="bi bi-journal-text"></i> Audit Logs</a>
             <a href="widgets.html" class="nav-link"><i class="bi bi-grid-3x3-gap-fill"></i> Widgets</a>
@@ -104,8 +126,8 @@
                     <div class="dropdown">
                         <button class="btn btn-white btn-icon shadow-sm" type="button" id="headerDropdown"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ asset('images/user10848a.png') }}"
-                                alt="User" class="rounded-circle" width="32" height="32" />
+                            <img src="{{ asset('images/user10848a.png') }}" alt="User" class="rounded-circle"
+                                width="32" height="32" />
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2"
                             aria-labelledby="headerDropdown">
@@ -115,12 +137,15 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item text-danger" href="{{ route('logout') }}" 
-   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-   Logout</a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-    @csrf
-</form></li>
-   
+                            <li><a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -128,12 +153,13 @@
         </header>
 
         <main class="container-fluid px-3 px-lg-4 py-4">
-         
-         @yield('content')
+
+            @yield('content')
         </main>
     </div>
 
-    <div class="modal fade" id="addVehicleModal" tabindex="-1" aria-labelledby="addVehicleLabel" aria-hidden="true">
+    <div class="modal fade" id="addVehicleModal" tabindex="-1" aria-labelledby="addVehicleLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -182,7 +208,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="newShipmentModal" tabindex="-1" aria-labelledby="newShipmentLabel" aria-hidden="true">
+    <div class="modal fade" id="newShipmentModal" tabindex="-1" aria-labelledby="newShipmentLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -222,8 +249,7 @@
                             </div>
                             <div class="col-12">
                                 <label class="form-label">Special Instructions</label>
-                                <textarea class="form-control" rows="3"
-                                    placeholder="Notes for driver or client"></textarea>
+                                <textarea class="form-control" rows="3" placeholder="Notes for driver or client"></textarea>
                             </div>
                         </div>
                     </form>
@@ -236,6 +262,8 @@
         </div>
     </div>
     <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="{{ asset('js/create-stepper.js') }}"></script>
+    <script src="{{ asset('js/tracking.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

@@ -32,5 +32,6 @@ function updateSidebarState() {
     }
 }
 
+
 updateSidebarState();
 window.addEventListener('resize', updateSidebarState);
