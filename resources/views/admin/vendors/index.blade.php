@@ -6,13 +6,14 @@
     <main class="p-3 p-lg-4">
         <div class="section-header d-flex flex-wrap align-items-start justify-content-between gap-3 mb-3">
             <div>
-                <h1 class="h2 mb-1">All Orders</h1>
-                <p class="text-muted">Track order fulfillment, billing, and delivery across your logistics network.
+                <h1 class="h2 mb-1">All Vendors</h1>
+                <p class="text-muted">Manage vendor relationships, track performance, and coordinate deliveries across your
+                    logistics network.
                 </p>
             </div>
             <div class="d-flex flex-wrap gap-2">
-                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newOrderModal">
-                    <i class="bi bi-plus-lg me-1"></i> New Order
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newVendorModal">
+                    <i class="bi bi-plus-lg me-1"></i> New Vendor
                 </button>
                 <button class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-download me-1"></i> Export
@@ -30,7 +31,7 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <div>
-                                <p class="text-muted mb-1">Total Orders</p>
+                                <p class="text-muted mb-1">Total Vendors</p>
                                 <h3 class="mb-0">1,247</h3>
                             </div>
                             <div class="metric-badge bg-primary-soft text-primary">
@@ -50,14 +51,14 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <div>
-                                <p class="text-muted mb-1">Processing</p>
+                                <p class="text-muted mb-1">Active Vendors</p>
                                 <h3 class="mb-0">834</h3>
                             </div>
                             <div class="metric-badge bg-info-soft text-info">
                                 <i class="bi bi-gear"></i>
                             </div>
                         </div>
-                        <p class="text-muted small mb-0">Currently being fulfilled</p>
+                        <p class="text-muted small mb-0">Currently active</p>
                         <div class="mt-2">
                             <span class="badge bg-info-soft text-info">66.8%</span>
                             <small class="text-muted ms-1">of total</small>
@@ -101,96 +102,6 @@
                         <div class="mt-2">
                             <span class="badge bg-warning-soft text-warning">4.6%</span>
                             <small class="text-muted ms-1">pending rate</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Charts Section -->
-        <div class="row g-3 mb-4">
-            <div class="col-12 col-lg-6">
-                <div class="card card-soft h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Order Status Distribution</h5>
-                        <p class="text-muted small mb-4">Current breakdown by status</p>
-                        <div class="row text-center gy-3">
-                            <div class="col-6">
-                                <div class="position-relative">
-                                    <svg width="120" height="120" class="mx-auto">
-                                        <circle cx="60" cy="60" r="50" fill="none" stroke="#e2e8f0"
-                                            stroke-width="8" />
-                                        <circle cx="60" cy="60" r="50" fill="none" stroke="#162e1c"
-                                            stroke-width="8" stroke-dasharray="314" stroke-dashoffset="94"
-                                            stroke-linecap="round" />
-                                    </svg>
-                                    <div class="position-absolute top-50 start-50 translate-middle">
-                                        <div class="h4 mb-0">67%</div>
-                                        <small class="text-muted">Processing</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mt-4">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div class="badge bg-primary me-2" style="width: 12px; height: 12px;"></div>
-                                        <span class="small">Processing (834)</span>
-                                    </div>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div class="badge bg-success me-2" style="width: 12px; height: 12px;"></div>
-                                        <span class="small">Delivered (356)</span>
-                                    </div>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div class="badge bg-warning me-2" style="width: 12px; height: 12px;"></div>
-                                        <span class="small">Pending (57)</span>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <div class="badge bg-secondary me-2" style="width: 12px; height: 12px;">
-                                        </div>
-                                        <span class="small">Returned (0)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="card card-soft h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Order Value Trends</h5>
-                        <p class="text-muted small mb-4">Monthly order value performance</p>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between small text-muted mb-1">
-                                <span>This Month</span><span>₦2.4M</span>
-                            </div>
-                            <div class="progress progress-track mb-3">
-                                <div class="progress-bar bg-primary" style="width: 85%;"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between small text-muted mb-1">
-                                <span>Last Month</span><span>₦2.2M</span>
-                            </div>
-                            <div class="progress progress-track mb-3">
-                                <div class="progress-bar bg-info" style="width: 78%;"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between small text-muted mb-1">
-                                <span>2 Months Ago</span><span>₦1.9M</span>
-                            </div>
-                            <div class="progress progress-track mb-3">
-                                <div class="progress-bar bg-success" style="width: 67%;"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between small text-muted mb-1">
-                                <span>3 Months Ago</span><span>₦1.7M</span>
-                            </div>
-                            <div class="progress progress-track">
-                                <div class="progress-bar bg-warning" style="width: 60%;"></div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -253,344 +164,56 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="border-bottom">
-                                    <td class="py-3 px-3 align-middle"><input type="checkbox" class="form-check-input">
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">SH-2024-001</td>
-                                    <td class="py-3 px-3 align-middle">Acme Corporation</td>
-                                    <td class="py-3 px-3 align-middle">New York, NY → Los Angeles, CA</td>
-                                    <td class="py-3 px-3 align-middle"><span
-                                            class="badge bg-danger-soft text-danger">High</span></td>
-                                    <td class="py-3 px-3 align-middle">2,450 kg</td>
-                                    <td class="py-3 px-3 align-middle">₦72,350</td>
-                                    <td class="py-3 px-3 align-middle">May 15, 2024</td>
-                                    <td class="py-3 px-3 align-middle">May 18, 2024</td>
-                                    <td class="py-3 px-3 align-middle"><span class="badge bg-primary">In Transit</span>
-                                    </td>
-                                    <td class="py-3 px-3 align-middle"><i class="bi bi-truck text-primary me-1"></i>Road
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">John Smith</td>
-                                    <td class="py-3 px-3 align-middle">
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm btn-outline-secondary" type="button"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bi bi-three-dots"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#shipmentDetailModal"><i
-                                                            class="bi bi-eye me-2"></i>View Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-pencil me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-geo-alt me-2"></i>Track</a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li><a class="dropdown-item text-danger" href="#"><i
-                                                            class="bi bi-trash me-2"></i>Cancel</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom">
-                                    <td class="py-3 px-3 align-middle"><input type="checkbox" class="form-check-input">
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">SH-2024-002</td>
-                                    <td class="py-3 px-3 align-middle">Globex Industries</td>
-                                    <td class="py-3 px-3 align-middle">Chicago, IL → Houston, TX</td>
-                                    <td class="py-3 px-3 align-middle"><span
-                                            class="badge bg-warning-soft text-warning">Medium</span></td>
-                                    <td class="py-3 px-3 align-middle">1,890 kg</td>
-                                    <td class="py-3 px-3 align-middle">₦49,980</td>
-                                    <td class="py-3 px-3 align-middle">May 14, 2024</td>
-                                    <td class="py-3 px-3 align-middle">May 17, 2024</td>
-                                    <td class="py-3 px-3 align-middle"><span class="badge bg-primary">In Transit</span>
-                                    </td>
-                                    <td class="py-3 px-3 align-middle"><i class="bi bi-truck text-primary me-1"></i>Road
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">Maria Lopez</td>
-                                    <td class="py-3 px-3 align-middle">
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm btn-outline-secondary" type="button"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bi bi-three-dots"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#shipmentDetailModal"><i
-                                                            class="bi bi-eye me-2"></i>View Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-pencil me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-geo-alt me-2"></i>Track</a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li><a class="dropdown-item text-danger" href="#"><i
-                                                            class="bi bi-trash me-2"></i>Cancel</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom">
-                                    <td class="py-3 px-3 align-middle"><input type="checkbox" class="form-check-input">
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">SH-2024-003</td>
-                                    <td class="py-3 px-3 align-middle">Wayne Enterprises</td>
-                                    <td class="py-3 px-3 align-middle">Miami, FL → Atlanta, GA</td>
-                                    <td class="py-3 px-3 align-middle"><span
-                                            class="badge bg-info-soft text-info">Low</span></td>
-                                    <td class="py-3 px-3 align-middle">950 kg</td>
-                                    <td class="py-3 px-3 align-middle">₦18,720</td>
-                                    <td class="py-3 px-3 align-middle">May 16, 2024</td>
-                                    <td class="py-3 px-3 align-middle">May 17, 2024</td>
-                                    <td class="py-3 px-3 align-middle"><span
-                                            class="badge bg-warning text-dark">Delayed</span></td>
-                                    <td class="py-3 px-3 align-middle"><i class="bi bi-truck text-primary me-1"></i>Road
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">Tony Blake</td>
-                                    <td class="py-3 px-3 align-middle">
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm btn-outline-secondary" type="button"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bi bi-three-dots"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-eye me-2"></i>View
-                                                        Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-pencil me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-geo-alt me-2"></i>Track</a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li><a class="dropdown-item text-danger" href="#"><i
-                                                            class="bi bi-trash me-2"></i>Cancel</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom">
-                                    <td class="py-3 px-3 align-middle"><input type="checkbox" class="form-check-input">
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">SH-2024-004</td>
-                                    <td class="py-3 px-3 align-middle">Stark Industries</td>
-                                    <td class="py-3 px-3 align-middle">San Francisco, CA → Tokyo, Japan</td>
-                                    <td class="py-3 px-3 align-middle"><span
-                                            class="badge bg-danger-soft text-danger">High</span></td>
-                                    <td class="py-3 px-3 align-middle">3,200 kg</td>
-                                    <td class="py-3 px-3 align-middle">₦156,800</td>
-                                    <td class="py-3 px-3 align-middle">May 13, 2024</td>
-                                    <td class="py-3 px-3 align-middle">May 15, 2024</td>
-                                    <td class="py-3 px-3 align-middle"><span class="badge bg-success">Delivered</span>
-                                    </td>
-                                    <td class="py-3 px-3 align-middle"><i class="bi bi-airplane text-info me-1"></i>Air
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">Priya Shah</td>
-                                    <td class="py-3 px-3 align-middle">
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm btn-outline-secondary" type="button"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bi bi-three-dots"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-eye me-2"></i>View
-                                                        Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-pencil me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-geo-alt me-2"></i>Track</a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li><a class="dropdown-item text-danger" href="#"><i
-                                                            class="bi bi-trash me-2"></i>Cancel</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom">
-                                    <td class="py-3 px-3 align-middle"><input type="checkbox" class="form-check-input">
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">SH-2024-005</td>
-                                    <td class="py-3 px-3 align-middle">Oceanic Imports</td>
-                                    <td class="py-3 px-3 align-middle">Shanghai, China → Seattle, WA</td>
-                                    <td class="py-3 px-3 align-middle"><span
-                                            class="badge bg-warning-soft text-warning">Medium</span></td>
-                                    <td class="py-3 px-3 align-middle">15,600 kg</td>
-                                    <td class="py-3 px-3 align-middle">₦234,500</td>
-                                    <td class="py-3 px-3 align-middle">May 01, 2024</td>
-                                    <td class="py-3 px-3 align-middle">May 20, 2024</td>
-                                    <td class="py-3 px-3 align-middle"><span class="badge bg-primary">In Transit</span>
-                                    </td>
-                                    <td class="py-3 px-3 align-middle"><i class="bi bi-water text-success me-1"></i>Sea
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">Michael Chen</td>
-                                    <td class="py-3 px-3 align-middle">
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm btn-outline-secondary" type="button"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bi bi-three-dots"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-eye me-2"></i>View
-                                                        Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-pencil me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-geo-alt me-2"></i>Track</a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li><a class="dropdown-item text-danger" href="#"><i
-                                                            class="bi bi-trash me-2"></i>Cancel</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom">
-                                    <td class="py-3 px-3 align-middle"><input type="checkbox" class="form-check-input">
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">SH-2024-006</td>
-                                    <td class="py-3 px-3 align-middle">TechCorp Solutions</td>
-                                    <td class="py-3 px-3 align-middle">Austin, TX → Denver, CO</td>
-                                    <td class="py-3 px-3 align-middle"><span
-                                            class="badge bg-info-soft text-info">Low</span></td>
-                                    <td class="py-3 px-3 align-middle">1,250 kg</td>
-                                    <td class="py-3 px-3 align-middle">₦31,400</td>
-                                    <td class="py-3 px-3 align-middle">May 16, 2024</td>
-                                    <td class="py-3 px-3 align-middle">May 18, 2024</td>
-                                    <td class="py-3 px-3 align-middle"><span class="badge bg-primary">In Transit</span>
-                                    </td>
-                                    <td class="py-3 px-3 align-middle"><i class="bi bi-truck text-primary me-1"></i>Road
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">Sarah Johnson</td>
-                                    <td class="py-3 px-3 align-middle">
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm btn-outline-secondary" type="button"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bi bi-three-dots"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-eye me-2"></i>View
-                                                        Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-pencil me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-geo-alt me-2"></i>Track</a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li><a class="dropdown-item text-danger" href="#"><i
-                                                            class="bi bi-trash me-2"></i>Cancel</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom">
-                                    <td class="py-3 px-3 align-middle"><input type="checkbox" class="form-check-input">
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">SH-2024-007</td>
-                                    <td class="py-3 px-3 align-middle">Global Manufacturing</td>
-                                    <td class="py-3 px-3 align-middle">Detroit, MI → Nashville, TN</td>
-                                    <td class="py-3 px-3 align-middle"><span
-                                            class="badge bg-warning-soft text-warning">Medium</span></td>
-                                    <td class="py-3 px-3 align-middle">4,800 kg</td>
-                                    <td class="py-3 px-3 align-middle">₦89,200</td>
-                                    <td class="py-3 px-3 align-middle">May 14, 2024</td>
-                                    <td class="py-3 px-3 align-middle">May 16, 2024</td>
-                                    <td class="py-3 px-3 align-middle"><span class="badge bg-success">Delivered</span>
-                                    </td>
-                                    <td class="py-3 px-3 align-middle"><i class="bi bi-truck text-primary me-1"></i>Road
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">Robert Davis</td>
-                                    <td class="py-3 px-3 align-middle">
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm btn-outline-secondary" type="button"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bi bi-three-dots"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-eye me-2"></i>View
-                                                        Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-pencil me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-geo-alt me-2"></i>Track</a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li><a class="dropdown-item text-danger" href="#"><i
-                                                            class="bi bi-trash me-2"></i>Cancel</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom">
-                                    <td class="py-3 px-3 align-middle"><input type="checkbox" class="form-check-input">
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">SH-2024-008</td>
-                                    <td class="py-3 px-3 align-middle">Fresh Foods Inc</td>
-                                    <td class="py-3 px-3 align-middle">Portland, OR → Las Vegas, NV</td>
-                                    <td class="py-3 px-3 align-middle"><span
-                                            class="badge bg-danger-soft text-danger">High</span></td>
-                                    <td class="py-3 px-3 align-middle">2,100 kg</td>
-                                    <td class="py-3 px-3 align-middle">₦45,600</td>
-                                    <td class="py-3 px-3 align-middle">May 15, 2024</td>
-                                    <td class="py-3 px-3 align-middle">May 17, 2024</td>
-                                    <td class="py-3 px-3 align-middle"><span class="badge bg-primary">In Transit</span>
-                                    </td>
-                                    <td class="py-3 px-3 align-middle"><i class="bi bi-truck text-primary me-1"></i>Road
-                                    </td>
-                                    <td class="py-3 px-3 align-middle">Lisa Wong</td>
-                                    <td class="py-3 px-3 align-middle">
-                                        <div class="dropdown">
-                                            <button class="btn btn-sm btn-outline-secondary" type="button"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bi bi-three-dots"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-eye me-2"></i>View
-                                                        Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-pencil me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="bi bi-geo-alt me-2"></i>Track</a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li><a class="dropdown-item text-danger" href="#"><i
-                                                            class="bi bi-trash me-2"></i>Cancel</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @foreach ($vendors as $vendor)
+                                    <tr class="border-bottom">
+                                        <td class="py-3 px-3 align-middle"><input type="checkbox"
+                                                class="form-check-input">
+                                        </td>
+                                        <td class="py-3 px-3 align-middle">SH-2024-00{{ $vendor->id }}</td>
+                                        <td class="py-3 px-3 align-middle">{{ $vendor->name }}</td>
+                                        <td class="py-3 px-3 align-middle">{{ $vendor->route }}</td>
+                                        <td class="py-3 px-3 align-middle"><span
+                                                class="badge bg-danger-soft text-danger">High</span></td>
+                                        <td class="py-3 px-3 align-middle">2,450 kg</td>
+                                        <td class="py-3 px-3 align-middle">₦72,350</td>
+                                        <td class="py-3 px-3 align-middle">May 15, 2024</td>
+                                        <td class="py-3 px-3 align-middle">May 18, 2024</td>
+                                        <td class="py-3 px-3 align-middle"><span class="badge bg-primary">In
+                                                Transit</span>
+                                        </td>
+                                        <td class="py-3 px-3 align-middle"><i
+                                                class="bi bi-truck text-primary me-1"></i>Road
+                                        </td>
+                                        <td class="py-3 px-3 align-middle">John Smith</td>
+                                        <td class="py-3 px-3 align-middle">
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-secondary" type="button"
+                                                    data-bs-toggle="dropdown">
+                                                    <i class="bi bi-three-dots"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                                            data-bs-target="#shipmentDetailModal"><i
+                                                                class="bi bi-eye me-2"></i>View Details</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i
+                                                                class="bi bi-pencil me-2"></i>Edit</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i
+                                                                class="bi bi-geo-alt me-2"></i>Track</a></li>
+                                                    <li>
+                                                        <hr class="dropdown-divider">
+                                                    </li>
+                                                    <li><a class="dropdown-item text-danger" href="#"><i
+                                                                class="bi bi-trash me-2"></i>Cancel</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mt-3">
-            <div class="text-muted small">Showing 1 to 10 of 54 results</div>
-            <nav aria-label="Orders pagination">
-                <ul class="pagination pagination-sm mb-0 pagination-primary">
-                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
         </div>
 
         <div class="modal fade" id="newOrderModal" tabindex="-1" aria-labelledby="newOrderModalLabel"

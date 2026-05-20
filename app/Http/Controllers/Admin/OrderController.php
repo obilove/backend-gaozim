@@ -116,6 +116,8 @@ class OrderController extends Controller
 
             'delivery_type' => $request->delivery_type,
 
+            //'total_route' => $request->total_route, (number of transloading)
+
             'item' => $request->item,
 
             'fragile' => $request->fragile ? true : false,
@@ -311,11 +313,17 @@ class OrderController extends Controller
     /**
      * Track order
      */
-    public function track($tracker)
+    public function track()
+    {
+        return view('admin.orders.track');
+    }
+
+    public function showtrack($tracker)
     {
         $order = Order::where('tracker', $tracker)
             ->firstOrFail();
 
-        return view('admin.orders.track', compact('order'));
+        return view('admin.orders.show-track', compact('order'));
     }
+    
 }

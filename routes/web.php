@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\WarehouseController;
+use App\Http\Controllers\Admin\CarrierController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,7 +19,7 @@ Auth::routes();
     return redirect('/');
 })->name('logout');
 Route::middleware(['auth'])->prefix('super-admin')->group(function () {
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 });
 
 
@@ -65,6 +68,81 @@ Route::middleware(['auth'])->prefix('super-admin')->name('admin.')->group(functi
 
     Route::delete('/orders/delete/{id}', [OrderController::class, 'destroy'])
         ->name('orders.destroy');
-});
+    
+    Route::get('/track', [OrderController::class, 'track'])
+        ->name('orders.track');
 
 
+         // Additional admin warehouses
+    Route::get('/warehouses', [WarehouseController::class, 'index'])
+        ->name('warehouses.index');
+
+    Route::get('/warehouses/create', [WarehouseController::class, 'create'])
+        ->name('warehouses.create');
+
+    Route::post('/warehouses/store', [WarehouseController::class, 'store'])
+        ->name('warehouses.store');
+
+    Route::get('/warehouses/show/{id}', [WarehouseController::class, 'show'])
+        ->name('warehouses.show');
+
+    Route::get('/warehouses/edit/{id}', [WarehouseController::class, 'edit'])
+        ->name('warehouses.edit');
+
+    Route::put('/warehouses/update/{id}', [WarehouseController::class, 'update'])
+        ->name('warehouses.update');
+
+    Route::delete('/warehouses/delete/{id}', [WarehouseController::class, 'destroy'])
+        ->name('warehouses.destroy');
+    
+    Route::get('/inventory/{id}', [WarehouseController::class, 'inventory'])
+        ->name('warehouses.inventory');
+
+    
+         // Additional admin carriers
+    Route::get('/carriers', [CarrierController::class, 'index'])
+        ->name('carriers.index');
+
+    Route::get('/carriers/create', [CarrierController::class, 'create'])
+        ->name('carriers.create');
+
+    Route::post('/carriers/store', [CarrierController::class, 'store'])
+        ->name('carriers.store');
+
+    Route::get('/carriers/show/{id}', [CarrierController::class, 'show'])
+        ->name('carriers.show');
+
+    Route::get('/carriers/edit/{id}', [CarrierController::class, 'edit'])
+        ->name('carriers.edit');
+
+    Route::put('/carriers/update/{id}', [CarrierController::class, 'update'])
+        ->name('carriers.update');
+
+    Route::delete('/carriers/delete/{id}', [CarrierController::class, 'destroy'])
+        ->name('carriers.destroy');
+
+        // Additional admin users
+
+           Route::get('/users', [UserController::class, 'index'])
+        ->name('users.index');
+
+    Route::get('/users/create', [UserController::class, 'create'])
+        ->name('users.create');
+
+    Route::post('/users/store', [UserController::class, 'store'])
+        ->name('users.store');
+
+    Route::get('/users/show/{id}', [UserController::class, 'show'])
+        ->name('users.show');
+
+    Route::get('/users/edit/{id}', [UserController::class, 'edit'])
+        ->name('users.edit');
+
+    Route::put('/users/update/{id}', [UserController::class, 'update'])
+        ->name('users.update');
+
+    Route::delete('/users/delete/{id}', [UserController::class, 'destroy'])
+        ->name('users.destroy');
+        });
+
+    

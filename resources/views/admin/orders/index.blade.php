@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    </table>
     <main class="p-3 p-lg-4">
         <div class="section-header d-flex flex-wrap align-items-start justify-content-between gap-3 mb-3">
             <div>
@@ -106,96 +105,6 @@
             </div>
         </div>
 
-        <!-- Charts Section -->
-        <div class="row g-3 mb-4">
-            <div class="col-12 col-lg-6">
-                <div class="card card-soft h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Order Status Distribution</h5>
-                        <p class="text-muted small mb-4">Current breakdown by status</p>
-                        <div class="row text-center gy-3">
-                            <div class="col-6">
-                                <div class="position-relative">
-                                    <svg width="120" height="120" class="mx-auto">
-                                        <circle cx="60" cy="60" r="50" fill="none" stroke="#e2e8f0"
-                                            stroke-width="8" />
-                                        <circle cx="60" cy="60" r="50" fill="none" stroke="#162e1c"
-                                            stroke-width="8" stroke-dasharray="314" stroke-dashoffset="94"
-                                            stroke-linecap="round" />
-                                    </svg>
-                                    <div class="position-absolute top-50 start-50 translate-middle">
-                                        <div class="h4 mb-0">67%</div>
-                                        <small class="text-muted">Processing</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mt-4">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div class="badge bg-primary me-2" style="width: 12px; height: 12px;"></div>
-                                        <span class="small">Processing (834)</span>
-                                    </div>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div class="badge bg-success me-2" style="width: 12px; height: 12px;"></div>
-                                        <span class="small">Delivered (356)</span>
-                                    </div>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div class="badge bg-warning me-2" style="width: 12px; height: 12px;"></div>
-                                        <span class="small">Pending (57)</span>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <div class="badge bg-secondary me-2" style="width: 12px; height: 12px;">
-                                        </div>
-                                        <span class="small">Returned (0)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="card card-soft h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Order Value Trends</h5>
-                        <p class="text-muted small mb-4">Monthly order value performance</p>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between small text-muted mb-1">
-                                <span>This Month</span><span>₦2.4M</span>
-                            </div>
-                            <div class="progress progress-track mb-3">
-                                <div class="progress-bar bg-primary" style="width: 85%;"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between small text-muted mb-1">
-                                <span>Last Month</span><span>₦2.2M</span>
-                            </div>
-                            <div class="progress progress-track mb-3">
-                                <div class="progress-bar bg-info" style="width: 78%;"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between small text-muted mb-1">
-                                <span>2 Months Ago</span><span>₦1.9M</span>
-                            </div>
-                            <div class="progress progress-track mb-3">
-                                <div class="progress-bar bg-success" style="width: 67%;"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between small text-muted mb-1">
-                                <span>3 Months Ago</span><span>₦1.7M</span>
-                            </div>
-                            <div class="progress progress-track">
-                                <div class="progress-bar bg-warning" style="width: 60%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="card border-0 shadow-sm mb-4">
             <div class="card-body pb-2">
                 <ul class="nav nav-tabs nav-tabs-line" role="tablist">
@@ -220,9 +129,19 @@
                             aria-controls="orders-delivered" aria-selected="false">Delivered</button>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tab-delayed" data-bs-toggle="tab" data-bs-target="#orders-delayed"
+                            type="button" role="tab" aria-controls="orders-delayed"
+                            aria-selected="false">Delayed</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <button class="nav-link" id="tab-returned" data-bs-toggle="tab"
                             data-bs-target="#orders-returned" type="button" role="tab"
                             aria-controls="orders-returned" aria-selected="false">Returned</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tab-cancelled" data-bs-toggle="tab"
+                            data-bs-target="#orders-cancelled" type="button" role="tab"
+                            aria-controls="orders-cancelled" aria-selected="false">Cancelled</button>
                     </li>
                 </ul>
             </div>
@@ -260,7 +179,7 @@
                                         </td>
                                         <td class="py-3 px-3 align-middle">{{ $order->tracker }}</td>
                                         <td class="py-3 px-3 align-middle">{{ $order->sender }}</td>
-                                        <td class="py-3 px-3 align-middle">{{ $order->receiver }} → {{ $order->receiver }}
+                                        <td class="py-3 px-3 align-middle">{{ $order->receiver }}
                                         </td>
                                         <td class="py-3 px-3 align-middle">
                                             @if ($order->status == 'pending')
@@ -359,9 +278,9 @@
                                                     <i class="bi bi-three-dots"></i>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="#"><i
-                                                                class="bi bi-eye me-2"></i>View
-                                                            Details</a></li>
+                                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                                            data-bs-target="#shipmentDetailModal"><i
+                                                                class="bi bi-eye me-2"></i>View Details</a></li>
                                                     <li><a class="dropdown-item" href="#"><i
                                                                 class="bi bi-pencil me-2"></i>Edit</a></li>
                                                     <li><a class="dropdown-item" href="#"><i
@@ -379,6 +298,9 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="tab-pane fade show" id="orders-pending" role="tabpanel" aria-labelledby="tab-all">
+                    <h2> welcome</h2>
                 </div>
             </div>
         </div>
@@ -535,4 +457,5 @@
         </div>
 
     </main>
+    @include('admin.orders.show')
 @endsection
