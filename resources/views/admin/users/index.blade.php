@@ -138,17 +138,33 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#shipmentDetailModal"><i class="bi bi-eye me-2"></i>View
-                                                    Details</a></li>
-                                            <li><a class="dropdown-item" href="#"><i
+                                                    data-bs-target="#viewUserModal" data-user-id="{{ $user->id }}"
+                                                    data-user-name="{{ $user->name }}"
+                                                    data-user-email="{{ $user->email }}"
+                                                    data-user-phone="{{ $user->phone ?? '' }}"
+                                                    data-user-status="{{ $user->status }}"><i
+                                                        class="bi bi-eye me-2"></i>View Details</a></li>
+                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#editOrderModal" data-user-id="{{ $user->id }}"
+                                                    data-user-name="{{ $user->name }}"
+                                                    data-user-email="{{ $user->email }}"
+                                                    data-user-phone="{{ $user->phone ?? '' }}"
+                                                    data-user-status="{{ $user->status }}"><i
                                                         class="bi bi-pencil me-2"></i>Edit</a></li>
-                                            <li><a class="dropdown-item" href="#"><i
-                                                        class="bi bi-geo-alt me-2"></i>Track</a></li>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
-                                            <li><a class="dropdown-item text-danger" href="#"><i
-                                                        class="bi bi-trash me-2"></i>Cancel</a></li>
+                                            <li>
+                                                <form method="POST"
+                                                    action="{{ route('admin.users.destroy', $user->id) }}"
+                                                    onsubmit="return confirm('Delete this user?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="dropdown-item text-danger">
+                                                        <i class="bi bi-trash me-2"></i>Delete
+                                                    </button>
+                                                </form>
+                                            </li>
                                         </ul>
                                     </div>
                                 </td>
@@ -164,56 +180,83 @@
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content border-0 shadow-sm">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="newOrderModalLabel">Create new order</h5>
+                        <h5 class="modal-title" id="newOrderModalLabel">Create new staff</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form method="POST" action="{{ route('admin.users.store') }}" enctype="multipart/form-data">
+                            @csrf
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label class="form-label">Customer</label>
-                                    <select class="form-select">
-                                        <option selected>Acme Corp</option>
-                                        <option>Globex Industries</option>
-                                        <option>Wayne Enterprises</option>
+                                    <label class="form-label">Name</label>
+                                    <input name="name" type="text" class="form-control"
+                                        value="{{ old('name') }}" required />
+                                    @error('name')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email</label>
+                                    <input name="email" type="email" class="form-control"
+                                        value="{{ old('email') }}" required />
+                                    @error('email')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone</label>
+                                    <input name="phone" type="text" class="form-control"
+                                        value="{{ old('phone') }}" />
+                                    @error('phone')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Password</label>
+                                    <input name="password" type="password" class="form-control" required />
+                                    @error('password')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Confirm Password</label>
+                                    <input name="password_confirmation" type="password" class="form-control" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Avatar</label>
+                                    <input name="image" type="file" class="form-control" accept="image/*" />
+                                    @error('image')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Status</label>
+                                    <select name="status" class="form-select">
+                                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active
+                                        </option>
+                                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>
+                                            Inactive</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Order value</label>
-                                    <input type="text" class="form-control" placeholder="₦0.00" />
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Shipment</label>
-                                    <input type="text" class="form-control" placeholder="SH-2024-010" />
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Due date</label>
-                                    <input type="date" class="form-control" />
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label">Notes</label>
-                                    <textarea class="form-control" rows="3" placeholder="Add order instructions or special requirements"></textarea>
-                                </div>
                             </div>
-                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Create order</button>
+                        <button type="submit" class="btn btn-primary">Create staff</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="viewOrderModal" tabindex="-1" aria-labelledby="viewOrderModalLabel"
+        <div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content border-0 shadow-sm">
                     <div class="modal-header">
                         <div>
-                            <h5 class="modal-title" id="viewOrderModalLabel">Order details</h5>
-                            <p class="text-muted small mb-0">Review order status, customer and shipment information.
-                            </p>
+                            <h5 class="modal-title" id="viewUserModalLabel">Staff details</h5>
+                            <p class="text-muted small mb-0">Review staff profile, contact details, and account status.</p>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -222,29 +265,33 @@
                             <div class="col-lg-5">
                                 <div class="card card-soft h-100">
                                     <div class="card-body">
-                                        <p class="text-muted small mb-1">Order ID</p>
-                                        <p class="fw-semibold mb-3">OR-5401</p>
-                                        <p class="text-muted small mb-1">Customer</p>
-                                        <p class="fw-semibold mb-3">Acme Corp</p>
-                                        <p class="text-muted small mb-1">Shipment</p>
-                                        <p class="fw-semibold mb-3">SH-2024-001</p>
-                                        <p class="text-muted small mb-1">Due date</p>
-                                        <p class="fw-semibold mb-0">May 18</p>
+                                        <p class="text-muted small mb-1">Staff ID</p>
+                                        <p class="fw-semibold mb-3" id="viewUserId"></p>
+                                        <p class="text-muted small mb-1">Name</p>
+                                        <p class="fw-semibold mb-3" id="viewUserNameDisplay"></p>
+                                        <p class="text-muted small mb-1">Email</p>
+                                        <p class="fw-semibold mb-3" id="viewUserEmailDisplay"></p>
+                                        <p class="text-muted small mb-1">Phone</p>
+                                        <p class="fw-semibold mb-3" id="viewUserPhoneDisplay"></p>
+                                        <p class="text-muted small mb-1">Status</p>
+                                        <p class="fw-semibold mb-0" id="viewUserStatusDisplay"></p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-7">
                                 <div class="card border-0 shadow-sm h-100">
                                     <div class="card-body">
-                                        <h6 class="mb-3">Order summary</h6>
-                                        <p class="text-muted mb-2"><strong>Value:</strong> ₦72,350</p>
-                                        <p class="text-muted mb-2"><strong>Status:</strong> Processing</p>
-                                        <p class="text-muted mb-2"><strong>Priority:</strong> High</p>
-                                        <p class="text-muted mb-0"><strong>Assigned to:</strong> Dispatch Team A</p>
+                                        <h6 class="mb-3">Profile summary</h6>
+                                        <p class="text-muted mb-2"><strong>Joined:</strong> <span
+                                                id="viewUserJoined">N/A</span></p>
+                                        <p class="text-muted mb-2"><strong>Role:</strong> <span
+                                                id="viewUserRole">Staff</span></p>
+                                        <p class="text-muted mb-2"><strong>Account status:</strong> <span
+                                                id="viewUserStatusSummary">N/A</span></p>
                                         <hr>
                                         <h6 class="mb-3">Notes</h6>
-                                        <p class="text-muted mb-0">Priority freight must load before 10:00 AM and
-                                            follow customs clearance protocol.</p>
+                                        <p class="text-muted mb-0">Use this modal to confirm staff details before editing
+                                            or deleting their account.</p>
                                     </div>
                                 </div>
                             </div>
@@ -259,56 +306,112 @@
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content border-0 shadow-sm">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editOrderModalLabel">Edit order</h5>
+                        <h5 class="modal-title" id="editOrderModalLabel">Edit staff</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form id="editUserForm" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label class="form-label">Order ID</label>
-                                    <input type="text" class="form-control" value="OR-5401" readonly />
+                                    <label class="form-label">Name</label>
+                                    <input id="editUserName" name="name" type="text" class="form-control"
+                                        required />
+                                    @error('name')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email</label>
+                                    <input id="editUserEmail" name="email" type="email" class="form-control"
+                                        required />
+                                    @error('email')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone</label>
+                                    <input id="editUserPhone" name="phone" type="text" class="form-control" />
+                                    @error('phone')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Status</label>
-                                    <select class="form-select">
-                                        <option>Processing</option>
-                                        <option>Pending</option>
-                                        <option>Shipped</option>
-                                        <option>Delivered</option>
-                                        <option>Returned</option>
+                                    <select id="editUserStatus" name="status" class="form-select">
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Customer</label>
-                                    <input type="text" class="form-control" value="Acme Corp" />
+                                    <label class="form-label">Password (leave blank to keep current)</label>
+                                    <input id="editUserPassword" name="password" type="password" class="form-control" />
+                                    @error('password')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Shipment</label>
-                                    <input type="text" class="form-control" value="SH-2024-001" />
+                                    <label class="form-label">Confirm Password</label>
+                                    <input name="password_confirmation" type="password" class="form-control" />
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Order value</label>
-                                    <input type="text" class="form-control" value="₦72,350" />
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Due date</label>
-                                    <input type="date" class="form-control" value="2024-05-18" />
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label">Notes</label>
-                                    <textarea class="form-control" rows="3">Priority freight must load before 10:00 AM and follow customs clearance protocol.</textarea>
+                                <div class="col-md-12">
+                                    <label class="form-label">Avatar</label>
+                                    <input name="image" type="file" class="form-control" accept="image/*" />
+                                    @error('image')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
-                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
+
+        <script>
+            const editModal = document.getElementById('editOrderModal');
+            const editUserForm = document.getElementById('editUserForm');
+
+            editModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const userId = button.getAttribute('data-user-id');
+                const userName = button.getAttribute('data-user-name');
+                const userEmail = button.getAttribute('data-user-email');
+                const userPhone = button.getAttribute('data-user-phone');
+                const userStatus = button.getAttribute('data-user-status');
+
+                document.getElementById('editUserName').value = userName;
+                document.getElementById('editUserEmail').value = userEmail;
+                document.getElementById('editUserPhone').value = userPhone;
+                document.getElementById('editUserStatus').value = userStatus;
+
+                editUserForm.setAttribute('action', '{{ route('admin.users.update', ':id') }}'.replace(':id', userId));
+            });
+
+            const viewModal = document.getElementById('viewUserModal');
+
+            viewModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const userId = button.getAttribute('data-user-id');
+                const userName = button.getAttribute('data-user-name');
+                const userEmail = button.getAttribute('data-user-email');
+                const userPhone = button.getAttribute('data-user-phone');
+                const userStatus = button.getAttribute('data-user-status');
+
+                document.getElementById('viewUserId').textContent = 'SH-2026-00' + userId;
+                document.getElementById('viewUserNameDisplay').textContent = userName;
+                document.getElementById('viewUserEmailDisplay').textContent = userEmail;
+                document.getElementById('viewUserPhoneDisplay').textContent = userPhone || 'N/A';
+                document.getElementById('viewUserStatusDisplay').textContent = userStatus || 'N/A';
+                document.getElementById('viewUserStatusSummary').textContent = userStatus ? userStatus.charAt(0)
+                    .toUpperCase() + userStatus.slice(1) : 'N/A';
+            });
+        </script>
 
     </main>
 @endsection

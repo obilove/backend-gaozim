@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\CarrierController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -143,6 +145,55 @@ Route::middleware(['auth'])->prefix('super-admin')->name('admin.')->group(functi
 
     Route::delete('/users/delete/{id}', [UserController::class, 'destroy'])
         ->name('users.destroy');
+
+        //permissions routes
+
+         Route::get('/permissions', [PermissionController::class, 'index'])
+        ->name('permissions.index');
+
+    Route::get('/permissions/create', [PermissionController::class, 'create'])
+        ->name('permissions.create');
+
+    Route::post('/permissions/store', [PermissionController::class, 'store'])
+        ->name('permissions.store');
+
+    Route::get('/permissions/show/{id}', [PermissionController::class, 'show'])
+        ->name('permissions.show');
+
+    Route::get('/permissions/edit/{id}', [PermissionController::class, 'edit'])
+        ->name('permissions.edit');
+
+    Route::put('/permissions/update/{id}', [PermissionController::class, 'update'])
+        ->name('permissions.update');
+
+    Route::delete('/permissions/delete/{id}', [PermissionController::class, 'destroy'])
+        ->name('permissions.destroy');
+
+        //roles routes
+
+
+        Route::get('/roles', [RoleController::class, 'index'])
+        ->name('roles.index');
+
+    Route::get('/roles/create', [RoleController::class, 'create'])
+        ->name('roles.create');
+
+    Route::post('/roles/store', [RoleController::class, 'store'])
+        ->name('roles.store');
+
+    Route::get('/roles/show/{id}', [RoleController::class, 'show'])
+        ->name('roles.show');
+
+    Route::get('/roles/edit/{id}', [RoleController::class, 'edit'])
+        ->name('roles.edit');
+
+    Route::put('/roles/update/{id}', [RoleController::class, 'update'])
+        ->name('roles.update');
+
+    Route::delete('/roles/delete/{id}', [RoleController::class, 'destroy'])
+        ->name('roles.destroy');
+
+        
         });
 
     

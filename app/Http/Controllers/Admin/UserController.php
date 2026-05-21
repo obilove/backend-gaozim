@@ -68,7 +68,7 @@ class UserController extends Controller
 
             'password' => Hash::make($request->password),
 
-            'image' => $imageName,
+            //'image' => $imageName,
 
             'status' => $request->status ?? 'active',
         ]);
