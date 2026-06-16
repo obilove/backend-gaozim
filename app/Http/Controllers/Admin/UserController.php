@@ -53,7 +53,7 @@ class UserController extends Controller
 
             $image = $request->file('image');
 
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $imageName = time().'.'.$image->getClientOriginalExtension();
 
             $image->move(public_path('uploads/users'), $imageName);
         }
@@ -68,7 +68,7 @@ class UserController extends Controller
 
             'password' => Hash::make($request->password),
 
-            //'image' => $imageName,
+            'image' => $imageName,
 
             'status' => $request->status ?? 'active',
         ]);
@@ -109,7 +109,7 @@ class UserController extends Controller
 
             'name' => 'required|string|max:255',
 
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'email' => 'required|email|unique:users,email,'.$user->id,
 
             'phone' => 'nullable|string|max:255',
 
@@ -125,14 +125,14 @@ class UserController extends Controller
         if ($request->hasFile('image')) {
 
             if ($user->image &&
-                file_exists(public_path('uploads/users/' . $user->image))) {
+                file_exists(public_path('uploads/users/'.$user->image))) {
 
-                unlink(public_path('uploads/users/' . $user->image));
+                unlink(public_path('uploads/users/'.$user->image));
             }
 
             $image = $request->file('image');
 
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $imageName = time().'.'.$image->getClientOriginalExtension();
 
             $image->move(public_path('uploads/users'), $imageName);
         }
@@ -170,9 +170,9 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         if ($user->image &&
-            file_exists(public_path('uploads/users/' . $user->image))) {
+            file_exists(public_path('uploads/users/'.$user->image))) {
 
-            unlink(public_path('uploads/users/' . $user->image));
+            unlink(public_path('uploads/users/'.$user->image));
         }
 
         $user->delete();

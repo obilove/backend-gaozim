@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
@@ -30,10 +31,12 @@
         </div>
         <div class="px-3">
             <div class="section-title">Dashboard</div>
-            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"><i
+            <a href="{{ route('admin.dashboard') }}"
+                class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"><i
                     class="bi bi-speedometer2"></i> Overview</a>
             <a href="{{ route('admin.orders.track') }}"
-                class="nav-link {{ request()->routeIs('orders.track') ? 'active' : '' }}"><i class="bi bi-compass"></i>
+                class="nav-link {{ request()->routeIs('admin.orders.track') ? 'active' : '' }}"><i
+                    class="bi bi-compass"></i>
                 Track Delivery</a>
             <a href="" class="nav-link"><i class="bi bi-activity"></i> Fleet Status</a>
             <div class="section-title">Orders</div>
@@ -87,7 +90,12 @@
 
             <div class="section-title">System Tools</div>
             <a href="" class="nav-link"><i class="bi bi-gear"></i> Settings</a>
-            <a href="" class="nav-link"><i class="bi bi-shield-check"></i> Roles & Permissions</a>
+            <a href="{{ route('admin.permissions.index') }}"
+                class="nav-link {{ request()->routeIs('admin.permissions.index') ? 'active' : '' }}"><i
+                    class="bi bi-shield-check"></i>Permissions</a>
+            <a href="{{ route('admin.roles.index') }}"
+                class="nav-link {{ request()->routeIs('admin.roles.index') ? 'active' : '' }}"><i
+                    class="bi bi-person-badge"></i> Roles</a>
             <a href="" class="nav-link"><i class="bi bi-bell"></i> Notifications</a>
 
             <div class="section-title">Help & Logs</div>
@@ -262,7 +270,6 @@
         </div>
     </div>
     <script src="{{ asset('js/scripts.js') }}"></script>
-    <script src="{{ asset('js/create-stepper.js') }}"></script>
     <script src="{{ asset('js/tracking.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 

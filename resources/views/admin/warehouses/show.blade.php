@@ -6,39 +6,56 @@
                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                   <form>
+                   <form method="POST" action="{{ route('admin.warehouses.store') }}">
+                       @csrf
                        <div class="row g-3">
                            <div class="col-md-6">
                                <label class="form-label">Warehouse Name</label>
-                               <input type="text" class="form-control" placeholder="e.g. Lagos Depot" />
+                               <input name="name" type="text" class="form-control" placeholder="e.g. Lagos Depot"
+                                   required />
                            </div>
                            <div class="col-md-6">
-                               <label class="form-label">Region</label>
-                               <input type="text" class="form-control" placeholder="e.g. West Africa" />
+                               <label class="form-label">Code</label>
+                               <input name="code" type="text" class="form-control" placeholder="e.g. WH-001" />
                            </div>
                            <div class="col-md-6">
-                               <label class="form-label">Capacity (m²)</label>
-                               <input type="number" class="form-control" placeholder="18000" />
+                               <label class="form-label">Capacity</label>
+                               <input name="warehouse_capacity" type="text" class="form-control"
+                                   placeholder="18,000 m²" />
                            </div>
                            <div class="col-md-6">
-                               <label class="form-label">Temperature Control</label>
-                               <input type="text" class="form-control" placeholder="e.g. +15°C to +18°C" />
+                               <label class="form-label">Warehouse Manager</label>
+                               <input name="username" type="text" class="form-control"
+                                   placeholder="e.g. Amina Yusuf" />
+                           </div>
+                           <div class="col-md-6">
+                               <label class="form-label">Business</label>
+                               <input name="business" type="text" class="form-control"
+                                   placeholder="e.g. Cold Storage" />
+                           </div>
+                           <div class="col-md-6">
+                               <label class="form-label">Status</label>
+                               <select name="status" class="form-select">
+                                   <option value="active">Active</option>
+                                   <option value="inactive">Inactive</option>
+                               </select>
                            </div>
                            <div class="col-md-12">
-                               <label class="form-label">Warehouse Manager</label>
-                               <input type="text" class="form-control" placeholder="e.g. Amina Yusuf" />
+                               <label class="form-label">Location</label>
+                               <input name="location" type="text" class="form-control"
+                                   placeholder="e.g. West Africa" />
                            </div>
                            <div class="col-md-12">
                                <label class="form-label">Address</label>
-                               <textarea class="form-control" rows="3" placeholder="Facility address and access notes"></textarea>
+                               <textarea name="address" class="form-control" rows="3" placeholder="Facility address and access notes"></textarea>
                            </div>
                        </div>
-                   </form>
                </div>
                <div class="modal-footer">
                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                   <button type="button" class="btn btn-primary">Save Warehouse</button>
+                   <button type="submit" class="btn btn-primary">Save Warehouse</button>
                </div>
+               </form>
            </div>
        </div>
    </div>
@@ -52,39 +69,61 @@
                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                   <form>
+                   <form id="editWarehouseForm" method="POST">
+                       @csrf
+                       @method('PUT')
                        <div class="row g-3">
                            <div class="col-md-6">
                                <label class="form-label">Warehouse Name</label>
-                               <input type="text" class="form-control" value="Lagos Depot" />
+                               <input id="editWarehouseName" name="name" type="text" class="form-control"
+                                   required />
                            </div>
                            <div class="col-md-6">
-                               <label class="form-label">Region</label>
-                               <input type="text" class="form-control" value="West Africa" />
+                               <label class="form-label">Code</label>
+                               <input id="editWarehouseCode" name="code" type="text" class="form-control" />
                            </div>
                            <div class="col-md-6">
-                               <label class="form-label">Capacity (m²)</label>
-                               <input type="number" class="form-control" value="18000" />
+                               <label class="form-label">Capacity</label>
+                               <input id="editWarehouseCapacity" name="warehouse_capacity" type="text"
+                                   class="form-control" />
                            </div>
                            <div class="col-md-6">
-                               <label class="form-label">Temperature Control</label>
-                               <input type="text" class="form-control" value="+15°C to +18°C" />
+                               <label class="form-label">Warehouse Manager</label>
+                               <input id="editWarehouseManager" name="username" type="text"
+                                   class="form-control" />
+                           </div>
+                           <div class="col-md-6">
+                               <label class="form-label">Business</label>
+                               <input id="editWarehouseBusiness" name="business" type="text"
+                                   class="form-control" />
+                           </div>
+                           <div class="col-md-6">
+                               <label class="form-label">Status</label>
+                               <select id="editWarehouseStatus" name="status" class="form-select">
+                                   <option value="active">Active</option>
+                                   <option value="inactive">Inactive</option>
+                               </select>
                            </div>
                            <div class="col-md-12">
-                               <label class="form-label">Warehouse Manager</label>
-                               <input type="text" class="form-control" value="Amina Yusuf" />
+                               <label class="form-label">Location</label>
+                               <input id="editWarehouseLocation" name="location" type="text"
+                                   class="form-control" />
                            </div>
                            <div class="col-md-12">
                                <label class="form-label">Address</label>
-                               <textarea class="form-control" rows="3">Plot 24, Industrial Road, Lagos</textarea>
+                               <textarea id="editWarehouseAddress" name="address" class="form-control" rows="3"></textarea>
+                           </div>
+                           <div class="col-md-12">
+                               <label class="form-label">Badge</label>
+                               <input id="editWarehouseBadge" name="badge" type="text" class="form-control" />
                            </div>
                        </div>
-                   </form>
                </div>
                <div class="modal-footer">
                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                   <button type="button" class="btn btn-primary">Update Warehouse</button>
+                   <button type="submit" class="btn btn-primary">Update Warehouse</button>
                </div>
+               </form>
            </div>
        </div>
    </div>
@@ -95,9 +134,9 @@
            <div class="modal-content border-0 shadow-sm">
                <div class="modal-header">
                    <div>
-                       <h5 class="modal-title" id="warehouseDetailModalLabel">Lagos Depot Details</h5>
-                       <p class="text-muted small mb-0">Comprehensive facility overview, capacity metrics, and recent
-                           logs.</p>
+                       <h5 class="modal-title" id="warehouseDetailModalLabel"><span
+                               id="viewWarehouseName">Warehouse</span> Details</h5>
+                       <p class="text-muted small mb-0">Comprehensive facility overview and location details.</p>
                    </div>
                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
@@ -107,55 +146,41 @@
                            <div class="card card-soft h-100">
                                <div class="card-body">
                                    <div class="mb-3">
-                                       <span class="badge bg-success">Stable</span>
+                                       <span class="badge bg-success" id="viewWarehouseStatus">Active</span>
                                    </div>
                                    <h6 class="mb-3">Facility summary</h6>
                                    <div class="row g-3 mb-4">
                                        <div class="col-6">
-                                           <p class="text-muted small mb-1">Capacity</p>
-                                           <p class="fw-semibold mb-0">18,000 m²</p>
+                                           <p class="text-muted small mb-1">Code</p>
+                                           <p class="fw-semibold mb-0" id="viewWarehouseCode">N/A</p>
                                        </div>
                                        <div class="col-6">
-                                           <p class="text-muted small mb-1">Utilization</p>
-                                           <p class="fw-semibold mb-0">76%</p>
+                                           <p class="text-muted small mb-1">Capacity</p>
+                                           <p class="fw-semibold mb-0" id="viewWarehouseCapacity">N/A</p>
                                        </div>
                                        <div class="col-6">
                                            <p class="text-muted small mb-1">Manager</p>
-                                           <p class="fw-semibold mb-0">Amina Yusuf</p>
+                                           <p class="fw-semibold mb-0" id="viewWarehouseManager">N/A</p>
                                        </div>
                                        <div class="col-6">
-                                           <p class="text-muted small mb-1">Temp range</p>
-                                           <p class="fw-semibold mb-0">+15°C to +18°C</p>
+                                           <p class="text-muted small mb-1">Badge</p>
+                                           <p class="fw-semibold mb-0" id="viewWarehouseBadge">N/A</p>
                                        </div>
                                    </div>
                                    <div>
-                                       <h6 class="mb-2">Recent activity</h6>
-                                       <div class="timeline">
-                                           <div class="timeline-item mb-3">
-                                               <div class="timeline-dot bg-primary"></div>
-                                               <div>
-                                                   <p class="mb-1"><strong>12 pallets moved</strong> to outbound
-                                                       staging.</p>
-                                                   <span class="text-muted small">May 4, 2024 • 09:14</span>
-                                               </div>
+                                       <h6 class="mb-2">Warehouse details</h6>
+                                       <div class="row g-3">
+                                           <div class="col-12">
+                                               <p class="text-muted small mb-1">Business</p>
+                                               <p class="fw-semibold mb-0" id="viewWarehouseBusiness">N/A</p>
                                            </div>
-                                           <div class="timeline-item mb-3">
-                                               <div class="timeline-dot bg-success"></div>
-                                               <div>
-                                                   <p class="mb-1"><strong>Inventory audit</strong> completed for
-                                                       zone
-                                                       B.</p>
-                                                   <span class="text-muted small">May 3, 2024 • 15:22</span>
-                                               </div>
+                                           <div class="col-12">
+                                               <p class="text-muted small mb-1">Location</p>
+                                               <p class="fw-semibold mb-0" id="viewWarehouseLocation">N/A</p>
                                            </div>
-                                           <div class="timeline-item">
-                                               <div class="timeline-dot bg-warning"></div>
-                                               <div>
-                                                   <p class="mb-1"><strong>Temperature alert</strong> resolved in
-                                                       cold
-                                                       storage.</p>
-                                                   <span class="text-muted small">May 2, 2024 • 11:05</span>
-                                               </div>
+                                           <div class="col-12">
+                                               <p class="text-muted small mb-1">Address</p>
+                                               <p class="fw-semibold mb-0" id="viewWarehouseAddress">N/A</p>
                                            </div>
                                        </div>
                                    </div>
@@ -165,32 +190,11 @@
                        <div class="col-12 col-xl-7">
                            <div class="card border-0 shadow-sm h-100">
                                <div class="card-body">
-                                   <h6 class="mb-3">Operational metrics</h6>
-                                   <div class="row g-3 mb-4">
-                                       <div class="col-6">
-                                           <div class="small text-muted">Receiving Efficiency</div>
-                                           <div class="d-flex align-items-center gap-2">
-                                               <span class="fw-semibold">92%</span>
-                                               <span class="badge bg-success bg-opacity-10 text-success">On
-                                                   target</span>
-                                           </div>
-                                       </div>
-                                       <div class="col-6">
-                                           <div class="small text-muted">Order Pick Rate</div>
-                                           <div class="fw-semibold">510 picks/hr</div>
-                                       </div>
-                                       <div class="col-6">
-                                           <div class="small text-muted">Available Slots</div>
-                                           <div class="fw-semibold">4,250</div>
-                                       </div>
-                                       <div class="col-6">
-                                           <div class="small text-muted">Critical Items</div>
-                                           <div class="fw-semibold">8</div>
-                                       </div>
-                                   </div>
-                                   <h6 class="mb-3">Contact</h6>
-                                   <p class="mb-2"><strong>Phone:</strong> +234 901 234 5678</p>
-                                   <p class="mb-0"><strong>Email:</strong> aminay@cargomax.com</p>
+                                   <h6 class="mb-3">Action</h6>
+                                   <p class="text-muted mb-4">Use the warehouse action panel to inspect inventory or
+                                       update the facility profile.</p>
+                                   <a id="viewWarehouseInventoryLink" href="#" class="btn btn-primary">View
+                                       inventory</a>
                                </div>
                            </div>
                        </div>
@@ -198,7 +202,6 @@
                </div>
                <div class="modal-footer">
                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                   <button type="button" class="btn btn-primary">Open warehouse inventory</button>
                </div>
            </div>
        </div>

@@ -16,7 +16,12 @@ class Carrier extends Model
         'phone',
         'address',
         'status',
+        'password',
         'image',
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 
     /**

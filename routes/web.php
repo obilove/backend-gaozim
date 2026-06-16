@@ -9,19 +9,38 @@ use App\Http\Controllers\Admin\CarrierController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\DashboardController;
 
-Route::get('/', function () {
+
+        Route::get('/', [HomeController::class, 'index'])->name('index');
+        Route::get('/about', [HomeController::class, 'about'])->name('about');
+        Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+        Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
+        Route::get('/become-a-carrier', [HomeController::class, 'carrier'])->name('carrier');
+        Route::get('/request-a-carrier', [HomeController::class, 'vendor'])->name('vendor');
+        Route::get('/terms', [HomeController::class, 'terms'])->name('terms');
+        Route::get('/privacy', [HomeController::class, 'privacy'])->name('privacy');
+        Route::get('/guide', [HomeController::class, 'guide'])->name('guide');
+        Route::post('/sendmsg', [HomeController::class, 'sendMsg'])->name('sendmessage');
+        Route::get('/blogs', [HomeController::class, 'blog'])->name('viewblogs');
+        Route::get('/blog/{id}/{title}', [HomeController::class, 'blogdetail'])->name('viewblog');
+        Route::get('/download', [HomeController::class, 'download'])->name('download');
+
+/* Route::get('/', function () {
     return view('welcome');
-});
+}); */
 
 Auth::routes();
  Route::post('/logout', function (Request $request) {
     Auth::logout();
-    $request.session()->regenerateToken();
+    //$request.session()->regenerateToken();
     return redirect('/');
 })->name('logout');
-Route::middleware(['auth'])->prefix('super-admin')->group(function () {
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+
+
+Route::middleware(['auth'])->prefix('super-admin')->name('admin.')->group(function () {
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 

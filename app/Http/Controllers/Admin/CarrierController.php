@@ -5,17 +5,37 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Carrier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class CarrierController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display all carriers
      */
     public function index()
     {
         $carriers = Carrier::latest()->paginate(20);
+        $totalCarriers = Carrier::count();
+        $activeCarriers = Carrier::where('status', 'active')->count();
+        $inactiveCarriers = Carrier::where('status', 'inactive')->count();
 
-        return view('admin.carriers.index', compact('carriers'));
+        return view('admin.carriers.index', compact(
+            'carriers',
+            'totalCarriers',
+            'activeCarriers',
+            'inactiveCarriers'
+        ));
     }
 
     /**
@@ -39,6 +59,8 @@ class CarrierController extends Controller
 
             'phone' => 'required|string|max:255',
 
+            'password' => 'required|string|min:6',
+
             'address' => 'nullable|string',
 
             'status' => 'required|in:active,inactive',
@@ -52,7 +74,7 @@ class CarrierController extends Controller
 
             $image = $request->file('image');
 
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $imageName = time().'.'.$image->getClientOriginalExtension();
 
             $image->move(public_path('uploads/carriers'), $imageName);
         }
@@ -64,6 +86,8 @@ class CarrierController extends Controller
             'email' => $request->email,
 
             'phone' => $request->phone,
+
+            'password' => Hash::make($request->password),
 
             'address' => $request->address,
 
@@ -108,9 +132,11 @@ class CarrierController extends Controller
 
             'name' => 'required|string|max:255',
 
-            'email' => 'required|email|unique:carriers,email,' . $carrier->id,
+            'email' => 'required|email|unique:carriers,email,'.$carrier->id,
 
             'phone' => 'required|string|max:255',
+
+            'password' => 'nullable|string|min:6',
 
             'address' => 'nullable|string',
 
@@ -124,14 +150,14 @@ class CarrierController extends Controller
         if ($request->hasFile('image')) {
 
             if ($carrier->image &&
-                file_exists(public_path('uploads/carriers/' . $carrier->image))) {
+                file_exists(public_path('uploads/carriers/'.$carrier->image))) {
 
-                unlink(public_path('uploads/carriers/' . $carrier->image));
+                unlink(public_path('uploads/carriers/'.$carrier->image));
             }
 
             $image = $request->file('image');
 
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $imageName = time().'.'.$image->getClientOriginalExtension();
 
             $image->move(public_path('uploads/carriers'), $imageName);
         }
@@ -149,6 +175,7 @@ class CarrierController extends Controller
             'status' => $request->status,
 
             'image' => $imageName,
+            'password' => $request->filled('password') ? Hash::make($request->password) : $carrier->password,
         ]);
 
         return redirect()
@@ -164,9 +191,9 @@ class CarrierController extends Controller
         $carrier = Carrier::findOrFail($id);
 
         if ($carrier->image &&
-            file_exists(public_path('uploads/carriers/' . $carrier->image))) {
+            file_exists(public_path('uploads/carriers/'.$carrier->image))) {
 
-            unlink(public_path('uploads/carriers/' . $carrier->image));
+            unlink(public_path('uploads/carriers/'.$carrier->image));
         }
 
         $carrier->delete();

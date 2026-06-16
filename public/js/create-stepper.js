@@ -189,9 +189,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Handle form submission on final step
     nextBtn.addEventListener('click', function () {
         if (currentStep === totalSteps) {
-            // Submit form
-            alert('Shipment created successfully! Redirecting to shipments list...');
-            window.location.href = 'shipments.html';
+            const orderForm = document.getElementById('orderStepperForm');
+
+            if (orderForm) {
+                orderForm.submit();
+            }
         }
     });
 });

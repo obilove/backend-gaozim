@@ -11,18 +11,40 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+   /*  public function __construct()
     {
         $this->middleware('auth');
-    }
+    } */
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return view('home');
+     public function index(){
+        return view('index');
+    }
+   public function download(){
+        return view('download');
+    }
+  
+     public function about(){
+        return view('about');
+    }
+     public function contact(){
+        return view('contact');
+    }
+     public function vendor(){
+        return view('vendor');
+    }
+     public function faq(){
+        return view('faq');
+    }
+      public function carrier(){
+        return view('carrier');
+    }
+     public function terms(){
+        return view('terms');
+    }
+     public function privacy(){
+        return view('privacy');
+    }
+     public function guide(){
+        return view('guide');
     }
 }

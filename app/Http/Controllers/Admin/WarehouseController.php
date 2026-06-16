@@ -3,19 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Warehouse;
+use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
-      /**
+    /**
      * Display all warehouses
      */
     public function index()
     {
         $warehouses = Warehouse::latest()->paginate(10);
+        $totalWarehouses = Warehouse::count();
+        $activeWarehouses = Warehouse::where('status', 'active')->count();
+        $inactiveWarehouses = Warehouse::where('status', 'inactive')->count();
 
-        return view('admin.warehouses.index', compact('warehouses'));
+        return view('admin.warehouses.index', compact('warehouses', 'totalWarehouses', 'activeWarehouses', 'inactiveWarehouses'));
     }
 
     /**
@@ -33,29 +36,27 @@ class WarehouseController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:warehouses,email',
-            'phone' => 'required',
-            'password' => 'required|min:6',
+            'code' => 'nullable|string|max:255',
+            'business' => 'nullable|string|max:255',
+            'warehouse_capacity' => 'nullable|string|max:255',
+            'username' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:1024',
+            'location' => 'nullable|string|max:255',
+            'badge' => 'nullable|string|max:255',
+            'status' => 'nullable|in:active,inactive',
         ]);
 
         Warehouse::create([
+            'user_id' => auth()->id(),
             'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
-
+            'code' => $request->code,
             'status' => $request->status ?? 'active',
-            'user_type' => $request->user_type ?? 'consumer',
-            'account_type' => $request->account_type ?? 'Personal',
-
             'business' => $request->business,
-            'delivery_capacity' => $request->delivery_capacity,
-            'ave_size' => $request->ave_size,
-            'item_cat' => $request->item_cat,
-            'biz_cat' => $request->biz_cat,
+            'warehouse_capacity' => $request->warehouse_capacity,
+            'username' => $request->username,
             'address' => $request->address,
             'location' => $request->location,
-            'username' => $request->username,
+            'badge' => $request->badge,
         ]);
 
         return redirect()
@@ -92,34 +93,27 @@ class WarehouseController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:warehouses,email,' . $warehouse->id,
-            'phone' => 'required',
+            'code' => 'nullable|string|max:255',
+            'business' => 'nullable|string|max:255',
+            'warehouse_capacity' => 'nullable|string|max:255',
+            'username' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:1024',
+            'location' => 'nullable|string|max:255',
+            'badge' => 'nullable|string|max:255',
+            'status' => 'nullable|in:active,inactive',
         ]);
 
         $warehouse->update([
             'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-
-            'status' => $request->status,
-            'user_type' => $request->user_type,
-            'account_type' => $request->account_type,
-
+            'code' => $request->code,
+            'status' => $request->status ?? $warehouse->status,
             'business' => $request->business,
-            'delivery_capacity' => $request->delivery_capacity,
-            'ave_size' => $request->ave_size,
-            'item_cat' => $request->item_cat,
-            'biz_cat' => $request->biz_cat,
+            'warehouse_capacity' => $request->warehouse_capacity,
+            'username' => $request->username,
             'address' => $request->address,
             'location' => $request->location,
-            'username' => $request->username,
+            'badge' => $request->badge,
         ]);
-
-        if ($request->filled('password')) {
-            $warehouse->update([
-                'password' => Hash::make($request->password)
-            ]);
-        }
 
         return redirect()
             ->route('admin.warehouses.index')
@@ -139,7 +133,6 @@ class WarehouseController extends Controller
             ->route('admin.warehouses.index')
             ->with('success', 'Warehouse deleted successfully');
     }
-
 
     /**
      * Warehouse order

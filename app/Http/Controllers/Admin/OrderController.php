@@ -3,16 +3,26 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Carrier;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Vendor;
-use App\Models\Carrier;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display all orders
      */
@@ -22,10 +32,27 @@ class OrderController extends Controller
             'user',
             'vendor',
             'carrier',
-            'warehouse'
+            'warehouse',
         ])->latest()->paginate(20);
 
-        return view('admin.orders.index', compact('orders'));
+        $totalOrders = Order::count();
+        $pendingOrders = Order::where('status', 'pending')->count();
+        $deliveredOrders = Order::where('status', 'delivered')->count();
+        $inTransitOrders = Order::whereIn('status', [
+            'assigned',
+            'picked_up',
+            'at_collection',
+            'batched',
+            'in_transit',
+        ])->count();
+
+        return view('admin.orders.index', compact(
+            'orders',
+            'totalOrders',
+            'pendingOrders',
+            'deliveredOrders',
+            'inTransitOrders'
+        ));
     }
 
     /**
@@ -92,11 +119,11 @@ class OrderController extends Controller
 
             'user_id' => $request->user_id,
 
-            'vendor_id' => $request->vendor_id,
+            'vendor_id' => $request->vendor_id ?: null,
 
-            'carrier_id' => $request->carrier_id,
+            'carrier_id' => $request->carrier_id ?: null,
 
-            'warehouse_id' => $request->warehouse_id,
+            'warehouse_id' => $request->warehouse_id ?: null,
 
             'sender' => $request->sender,
 
@@ -116,7 +143,7 @@ class OrderController extends Controller
 
             'delivery_type' => $request->delivery_type,
 
-            //'total_route' => $request->total_route, (number of transloading)
+            // 'total_route' => $request->total_route, (number of transloading)
 
             'item' => $request->item,
 
@@ -124,7 +151,7 @@ class OrderController extends Controller
 
             'item_size' => $request->item_size,
 
-            'pickup_request_id' => $request->pickup_request_id,
+            'pickup_request_id' => $request->pickup_request_id ?: null,
 
             'duration' => $request->duration,
 
@@ -144,7 +171,7 @@ class OrderController extends Controller
 
             'process' => $request->process,
 
-            'payment_type' => $request->payment_type,
+            'payment_type' => $request->payment_type ?: null,
 
             'worth' => $request->worth ?? 0,
 
@@ -165,7 +192,7 @@ class OrderController extends Controller
             'user',
             'vendor',
             'carrier',
-            'warehouse'
+            'warehouse',
         ])->findOrFail($id);
 
         return view('admin.orders.show', compact('order'));
@@ -234,11 +261,11 @@ class OrderController extends Controller
 
             'user_id' => $request->user_id,
 
-            'vendor_id' => $request->vendor_id,
+            'vendor_id' => $request->vendor_id ?: null,
 
-            'carrier_id' => $request->carrier_id,
+            'carrier_id' => $request->carrier_id ?: null,
 
-            'warehouse_id' => $request->warehouse_id,
+            'warehouse_id' => $request->warehouse_id ?: null,
 
             'sender' => $request->sender,
 
@@ -264,7 +291,7 @@ class OrderController extends Controller
 
             'item_size' => $request->item_size,
 
-            'pickup_request_id' => $request->pickup_request_id,
+            'pickup_request_id' => $request->pickup_request_id ?: null,
 
             'duration' => $request->duration,
 
@@ -284,7 +311,7 @@ class OrderController extends Controller
 
             'process' => $request->process,
 
-            'payment_type' => $request->payment_type,
+            'payment_type' => $request->payment_type ?: null,
 
             'worth' => $request->worth ?? 0,
 
@@ -313,9 +340,21 @@ class OrderController extends Controller
     /**
      * Track order
      */
-    public function track()
+    public function track(Request $request)
     {
-        return view('admin.orders.track');
+        $order = null;
+        $tracker = $request->query('tracker');
+
+        if ($tracker) {
+            $order = Order::with([
+                'user',
+                'vendor',
+                'carrier',
+                'warehouse',
+            ])->where('tracker', Str::upper(trim($tracker)))->first();
+        }
+
+        return view('admin.orders.track', compact('order', 'tracker'));
     }
 
     public function showtrack($tracker)
@@ -325,5 +364,4 @@ class OrderController extends Controller
 
         return view('admin.orders.show-track', compact('order'));
     }
-    
 }

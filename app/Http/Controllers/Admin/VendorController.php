@@ -15,8 +15,16 @@ class VendorController extends Controller
     public function index()
     {
         $vendors = Vendor::latest()->paginate(10);
+        $totalVendors = Vendor::count();
+        $activeVendors = Vendor::where('status', 'active')->count();
+        $inactiveVendors = Vendor::where('status', 'inactive')->count();
 
-        return view('admin.vendors.index', compact('vendors'));
+        return view('admin.vendors.index', compact(
+            'vendors',
+            'totalVendors',
+            'activeVendors',
+            'inactiveVendors'
+        ));
     }
 
     /**
@@ -93,7 +101,7 @@ class VendorController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:vendors,email,' . $vendor->id,
+            'email' => 'required|email|unique:vendors,email,'.$vendor->id,
             'phone' => 'required',
         ]);
 
@@ -118,7 +126,7 @@ class VendorController extends Controller
 
         if ($request->filled('password')) {
             $vendor->update([
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
             ]);
         }
 
