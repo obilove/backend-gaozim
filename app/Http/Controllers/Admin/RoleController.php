@@ -3,146 +3,59 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
-    /**
-     * Display all roles
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::with('permissions')
-            ->latest()
-            ->paginate(20);
+        // 1. Base Query for Roles with Spatie eager-loading counts
+        $query = Role::withCount(['users', 'permissions']);
 
-        return view('admin.roles.index', compact('roles'));
-    }
-
-    /**
-     * Show create form
-     */
-    public function create()
-    {
-        $permissions = Permission::all();
-
-        return view('admin.roles.create', compact('permissions'));
-    }
-
-    /**
-     * Store role
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-
-            'name' => 'required|string|max:255|unique:roles,name',
-
-            'guard_name' => 'required|string|max:255',
-
-            'permissions' => 'nullable|array',
-        ]);
-
-        $role = Role::create([
-
-            'name' => Str::slug($request->name),
-
-            'guard_name' => $request->guard_name,
-        ]);
-
-        /**
-         * Assign permissions
-         */
-        if ($request->permissions) {
-
-            $role->syncPermissions($request->permissions);
+        // 2. Search Filter
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        return redirect()
-            ->route('admin.roles.index')
-            ->with('success', 'Role created successfully');
-    }
+        // 3. Member Count Filter
+        if ($request->filled('member_count')) {
+            if ($request->member_count === '0-5') {
+                $query->has('users', '<=', 5);
+            } elseif ($request->member_count === '6-15') {
+                $query->has('users', '>', 5)->has('users', '<=', 15);
+            } elseif ($request->member_count === '16+') {
+                $query->has('users', '>', 15);
+            }
+        }
 
-    /**
-     * Show single role
-     */
-    public function show($id)
-    {
-        $role = Role::with('permissions')
-            ->findOrFail($id);
+        // Fetch paginated roles
+        $roles = $query->latest()->paginate(10)->withQueryString();
 
-        return view('admin.roles.show', compact('role'));
-    }
+        // 4. Calculate Dynamic Metrics
+        $totalRolesCount = Role::count();
+        $totalUsersWithRoles = User::role(Role::all())->count();
+        $totalUsers = User::count();
+        $userAssignmentPercentage = $totalUsers > 0 ? round(($totalUsersWithRoles / $totalUsers) * 100, 1) : 0;
+        
+        // Count roles that possess all permissions (Admin Roles)
+        $totalPermissionsCount = Permission::count();
+        $adminRolesCount = Role::has('permissions', '=', $totalPermissionsCount)->count();
+        $adminRolesPercentage = $totalRolesCount > 0 ? round(($adminRolesCount / $totalRolesCount) * 100, 1) : 0;
 
-    /**
-     * Show edit form
-     */
-    public function edit($id)
-    {
-        $role = Role::findOrFail($id);
-
+        // Fetch all permissions for use in modals or matrices
         $permissions = Permission::all();
 
-        return view('admin.roles.edit', compact(
-            'role',
-            'permissions'
+        return view('admin.roles.index', compact(
+            'roles',
+            'permissions',
+            'totalRolesCount',
+            'totalUsersWithRoles',
+            'userAssignmentPercentage',
+            'adminRolesCount',
+            'adminRolesPercentage'
         ));
-    }
-
-    /**
-     * Update role
-     */
-    public function update(Request $request, $id)
-    {
-        $role = Role::findOrFail($id);
-
-        $request->validate([
-
-            'name' => 'required|string|max:255|unique:roles,name,' . $role->id,
-
-            'guard_name' => 'required|string|max:255',
-
-            'permissions' => 'nullable|array',
-        ]);
-
-        $role->update([
-
-            'name' => Str::slug($request->name),
-
-            'guard_name' => $request->guard_name,
-        ]);
-
-        /**
-         * Update permissions
-         */
-        if ($request->permissions) {
-
-            $role->syncPermissions($request->permissions);
-
-        } else {
-
-            $role->syncPermissions([]);
-        }
-
-        return redirect()
-            ->route('admin.roles.index')
-            ->with('success', 'Role updated successfully');
-    }
-
-    /**
-     * Delete role
-     */
-    public function destroy($id)
-    {
-        $role = Role::findOrFail($id);
-
-        $role->delete();
-
-        return redirect()
-            ->route('admin.roles.index')
-            ->with('success', 'Role deleted successfully');
     }
 }
